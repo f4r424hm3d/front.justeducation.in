@@ -1,11 +1,11 @@
 import type React from 'react';
 import { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
-import { useUser } from '../context/UserContext';
+import { useAuth } from '../hooks/useAuth';
 import { FaUserEdit, FaUser, FaRocket, FaFileUpload, FaChevronDown } from 'react-icons/fa';
 
 const ProfilePage: React.FC = () => {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [featuresPost, setFeaturesPost] = useState({
     postType: '',
     targetAudience: '',

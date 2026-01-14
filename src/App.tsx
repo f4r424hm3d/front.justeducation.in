@@ -1,53 +1,54 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { UserProvider } from './context/UserContext';
 
-// Page imports
-import HomePage from './pages/HomePage';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import ProfilePage from './pages/ProfilePage';
-import LeadsPage from './pages/LeadsPage';
-import UniversityPage from './pages/UniversityPage';
-import FreeListingPage from './pages/FreeListingPage';
-import SchoolPage from './pages/SchoolPage';
-import ReligiousSchoolPage from './pages/ReligiousSchoolPage';
-import SchoolDetailsPage from './pages/SchoolDetailsPage';
-import SchoolDisabilitiesPage from './pages/SchoolDisabilitiesPage';
-import InvestorRelationsPage from './pages/InvestorRelationsPage';
-import CollegePage from './pages/CollegePage';
-import CityDetailsPage from './pages/CityDetailsPage';
-import CoachingPage from './pages/CoachingPage';
-import ITIPage from './pages/ITIPage';
-import VocationalPage from './pages/VocationalPage';
-import StreamDetailsPage from './pages/StreamDetailsPage';
-import PlaySchoolPage from './pages/PlaySchoolPage';
-import StudyAbroadPage from './pages/StudyAbroadPage';
-import EducationLoanPage from './pages/EducationLoanPage';
-import EduTechOnlinePage from './pages/EduTechOnlinePage';
-import TrainingCertificationPage from './pages/TrainingCertificationPage';
-import SkillDevelopmentPage from './pages/SkillDevelopmentPage';
-import MBBSAbroadConsultantPage from './pages/MBBSAbroadConsultantPage';
-import EducationConsultantPage from './pages/EducationConsultantPage';
-import ClassesPage from './pages/ClassesPage';
-import ClassResourceDetailsPage from './pages/ClassResourceDetailsPage';
-import ExamPage from './pages/ExamPage';
-import ExamDetailsPage from './pages/ExamDetailsPage';
-import TuitionsPage from './pages/TuitionsPage';
-import BookstoresLibrariesPage from './pages/BookstoresLibrariesPage';
-import NGOPage from './pages/NGOPage';
-import CourseDetailsPage from './pages/CourseDetailsPage';
-import AddSchoolPage from './pages/AddSchoolPage';
-import AddCollegePage from './pages/AddCollegePage';
-import AddUniversityPage from './pages/AddUniversityPage';
-import AddVocationalPage from './pages/AddVocationalpage';
-import AddItiPage from './pages/AddItiPage';
-import ListingPage from './pages/ListingPage';
-import AddStudyAbroadPage from './pages/AddStudyAbroad';
-import AddLibrariesPage from './pages/AddLibrariesPage';
-import AddNgoPage from './pages/AddNgoPage';
-import FillCoachingPage from './pages/fillCoachingPage';
-import AddMbbsAbroadConsultantPage from './pages/AddMbbsAbroadConsultantPage';
+// Lazy load pages for code splitting and better performance
+const HomePage = lazy(() => import('./pages/HomePage'));
+const SignInPage = lazy(() => import('./pages/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const LeadsPage = lazy(() => import('./pages/LeadsPage'));
+const UniversityPage = lazy(() => import('./pages/UniversityPage'));
+const FreeListingPage = lazy(() => import('./pages/FreeListingPage'));
+const SchoolPage = lazy(() => import('./pages/SchoolPage'));
+const ReligiousSchoolPage = lazy(() => import('./pages/ReligiousSchoolPage'));
+const SchoolDetailsPage = lazy(() => import('./pages/SchoolDetailsPage'));
+const SchoolDisabilitiesPage = lazy(() => import('./pages/SchoolDisabilitiesPage'));
+const InvestorRelationsPage = lazy(() => import('./pages/InvestorRelationsPage'));
+const CollegePage = lazy(() => import('./pages/CollegePage'));
+const CityDetailsPage = lazy(() => import('./pages/CityDetailsPage'));
+const CoachingPage = lazy(() => import('./pages/CoachingPage'));
+const ITIPage = lazy(() => import('./pages/ITIPage'));
+const VocationalPage = lazy(() => import('./pages/VocationalPage'));
+const StreamDetailsPage = lazy(() => import('./pages/StreamDetailsPage'));
+const PlaySchoolPage = lazy(() => import('./pages/PlaySchoolPage'));
+const StudyAbroadPage = lazy(() => import('./pages/StudyAbroadPage'));
+const EducationLoanPage = lazy(() => import('./pages/EducationLoanPage'));
+const EduTechOnlinePage = lazy(() => import('./pages/EduTechOnlinePage'));
+const TrainingCertificationPage = lazy(() => import('./pages/TrainingCertificationPage'));
+const SkillDevelopmentPage = lazy(() => import('./pages/SkillDevelopmentPage'));
+const MBBSAbroadConsultantPage = lazy(() => import('./pages/MBBSAbroadConsultantPage'));
+const EducationConsultantPage = lazy(() => import('./pages/EducationConsultantPage'));
+const ClassesPage = lazy(() => import('./pages/ClassesPage'));
+const ClassResourceDetailsPage = lazy(() => import('./pages/ClassResourceDetailsPage'));
+const ExamPage = lazy(() => import('./pages/ExamPage'));
+const ExamDetailsPage = lazy(() => import('./pages/ExamDetailsPage'));
+const TuitionsPage = lazy(() => import('./pages/TuitionsPage'));
+const BookstoresLibrariesPage = lazy(() => import('./pages/BookstoresLibrariesPage'));
+const NGOPage = lazy(() => import('./pages/NGOPage'));
+const CourseDetailsPage = lazy(() => import('./pages/CourseDetailsPage'));
+const AddSchoolPage = lazy(() => import('./pages/AddSchoolPage'));
+const AddCollegePage = lazy(() => import('./pages/AddCollegePage'));
+const AddUniversityPage = lazy(() => import('./pages/AddUniversityPage'));
+const AddVocationalPage = lazy(() => import('./pages/AddVocationalpage'));
+const AddItiPage = lazy(() => import('./pages/AddItiPage'));
+const ListingPage = lazy(() => import('./pages/ListingPage'));
+const AddStudyAbroadPage = lazy(() => import('./pages/AddStudyAbroad'));
+const AddLibrariesPage = lazy(() => import('./pages/AddLibrariesPage'));
+const AddNgoPage = lazy(() => import('./pages/AddNgoPage'));
+const FillCoachingPage = lazy(() => import('./pages/fillCoachingPage'));
+const AddMbbsAbroadConsultantPage = lazy(() => import('./pages/AddMbbsAbroadConsultantPage'));
+
+import { PageLoader } from './utils/loading';
 
 function ScrollToTop() {
   const location = useLocation();
@@ -59,9 +60,9 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        <ScrollToTop />
+    <Router>
+      <ScrollToTop />
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignInPage />} />
@@ -79,7 +80,6 @@ function App() {
           <Route path="/school-disabilities/:id" element={<SchoolDetailsPage />} />
           <Route path="/investor-relations" element={<InvestorRelationsPage />} />
           <Route path="/colleges" element={<CollegePage />} />
-          <Route path="/college/:id" element={<SchoolDetailsPage />} />
           <Route path="/college/:id" element={<SchoolDetailsPage />} />
           <Route path="/city/:cityName" element={<CityDetailsPage />} />
           <Route path="/coaching" element={<CoachingPage />} />
@@ -128,8 +128,8 @@ function App() {
           <Route path="/fill-coaching" element={<FillCoachingPage />} />
           <Route path="/listing" element={<ListingPage />} /> 
         </Routes>
-      </Router>
-    </UserProvider>
+      </Suspense>
+    </Router>
   );
 }
 

@@ -2,7 +2,7 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaAngleDown, FaUser, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
-import { useUser } from '../context/UserContext';
+import { useAuth } from '../hooks/useAuth';
 import api from '../Api'
 
 const Header: React.FC = () => {
@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const [investorDropdownOpen, setInvestorDropdownOpen] = useState(false);
   const [educationalDropdownOpen, setEducationalDropdownOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
-  const { user, setUser } = useUser();
+  const { user, setUser, signOut } = useAuth();
   const navigate = useNavigate();
 
   const getInitials = (name: string) => {
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const handleSignOut = () => {
     setShowDropdown(false);
     setMobileMenuOpen(false);
-    setUser(null);
+    signOut();
     navigate('/');
   };
 

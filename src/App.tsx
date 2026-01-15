@@ -109,6 +109,8 @@ function App() {
           <Route path="/classes/:className/:resourceName" element={<ClassResourceDetailsPage />} />
           <Route path="/exam" element={<ExamPage />} />
           <Route path="/exam/:examName" element={<ExamDetailsPage />} />
+          <Route path="/exam/:examName/*" element={<ExamDetailsPage />} />
+
           <Route path="/tuitions" element={<TuitionsPage />} />
           <Route path="/tuition/:id" element={<SchoolDetailsPage />} />
           <Route path="/bookstores-libraries" element={<BookstoresLibrariesPage />} />
@@ -126,7 +128,8 @@ function App() {
           <Route path="/add-ngo" element={<AddNgoPage />} />
           <Route path="/add-library" element={<AddLibrariesPage />} />
           <Route path="/fill-coaching" element={<FillCoachingPage />} />
-          <Route path="/listing" element={<ListingPage />} /> 
+          <Route path="/listing" element={<ListingPage />} /> \
+          
         </Routes>
       </Suspense>
     </Router>

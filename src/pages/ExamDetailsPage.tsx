@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Calendar, Clock, Users, MapPin, BookOpen, CheckCircle, AlertCircle, Download, ExternalLink, Star, Target, Award, TrendingUp, FileText, Calculator, Brain, Lightbulb, DollarSign, GraduationCap, Building, Trophy, ChevronDown, ChevronUp, Info, Phone, Mail, X } from 'lucide-react';
 import MainLayout from '../layouts/MainLayout';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const ExamDetailsPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -18,52 +19,70 @@ const ExamDetailsPage = () => {
     city: ''
   });
 
+
+  const location = useLocation();
+  const { examName } = useParams();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const segments = location.pathname.split('/');
+    const tab = segments[segments.length - 1];
+  
+    if (tabs.some(t => t.id === tab)) {
+      setActiveTab(tab);
+    } else {
+      setActiveTab('overview');
+    }
+  }, [location.pathname]);
+  
   // Function to handle tab change with smooth scroll to top
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
-    
+
+    navigate(`/exam/${examName}/${tabId}`);
     // Smooth scroll to top of the main content area
-    setTimeout(() => {
-      const mainContent = document.querySelector('.main-content');
-      if (mainContent) {
-        // Get the position of the main content relative to the viewport
-        const rect = mainContent.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        // Account for mobile header height (50px) and desktop (56px) with additional offset
-        const headerOffset = window.innerWidth < 640 ? 70 : 70; // Mobile vs desktop
-        const targetPosition = rect.top + scrollTop - headerOffset;
+    // setTimeout(() => {
+    //   const mainContent = document.querySelector('.main-content');
+    //   if (mainContent) {
+    //     // Get the position of the main content relative to the viewport
+    //     const rect = mainContent.getBoundingClientRect();
+    //     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //     // Account for mobile header height (50px) and desktop (56px) with additional offset
+    //     const headerOffset = window.innerWidth < 640 ? 70 : 70; // Mobile vs desktop
+    //     const targetPosition = rect.top + scrollTop - headerOffset;
         
-        // Use smooth scrolling with fallback for older browsers
-        if ('scrollBehavior' in document.documentElement.style) {
-          window.scrollTo({ 
-            top: targetPosition, 
-            behavior: 'smooth' 
-          });
-        } else {
-          // Fallback for browsers that don't support smooth scrolling
-          const startPosition = window.pageYOffset;
-          const distance = targetPosition - startPosition;
-          const duration = 500; // 500ms animation
-          let start: number | null = null;
+    //     // Use smooth scrolling with fallback for older browsers
+    //     if ('scrollBehavior' in document.documentElement.style) {
+    //       window.scrollTo({ 
+    //         top: targetPosition, 
+    //         behavior: 'smooth' 
+    //       });
+    //     } else {
+    //       // Fallback for browsers that don't support smooth scrolling
+    //       const startPosition = window.pageYOffset;
+    //       const distance = targetPosition - startPosition;
+    //       const duration = 500; // 500ms animation
+    //       let start: number | null = null;
           
-          const animation = (currentTime: number) => {
-            if (start === null) start = currentTime;
-            const timeElapsed = currentTime - start;
-            const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
-            window.scrollTo(0, run);
-            if (timeElapsed < duration) requestAnimationFrame(animation);
-          };
+    //       const animation = (currentTime: number) => {
+    //         if (start === null) start = currentTime;
+    //         const timeElapsed = currentTime - start;
+    //         const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+    //         window.scrollTo(0, run);
+    //         if (timeElapsed < duration) requestAnimationFrame(animation);
+    //       };
           
-          requestAnimationFrame(animation);
-        }
-      } else {
-        // Fallback: scroll to top of page
-        window.scrollTo({ 
-          top: 0, 
-          behavior: 'smooth' 
-        });
-      }
-    }, 100); // Small delay to ensure tab content is rendered
+    //       requestAnimationFrame(animation);
+    //     }
+    //   } else {
+    //     // Fallback: scroll to top of page
+    //     window.scrollTo({ 
+    //       top: 0, 
+    //       behavior: 'smooth' 
+    //     });
+    //   }
+    // }, 100); // Small delay to ensure tab content is rendered
+  
   };
 
   // Easing function for smooth animation fallback
@@ -385,7 +404,7 @@ const ExamDetailsPage = () => {
       WebkitOverflowScrolling: 'touch' // Better scrolling on iOS
     }}>
       {/* Header */}
-      <div className="bg-white shadow-sm border-b sticky top-0 z-40">
+      <div className="bg-white shadow-sm border-b pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
           <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
             {/* <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -408,7 +427,7 @@ const ExamDetailsPage = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-white border-b sticky top-[50px] sm:top-[56px] z-30 shadow-sm" style={{ backgroundColor: 'white' }}>
+      <div className="bg-white border-b sticky top-[75px] z-[30] shadow-sm" style={{ backgroundColor: 'white' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-4 sm:space-x-6 lg:space-x-8 overflow-x-auto scrollbar-hide">
             {tabs.map((tab) => (

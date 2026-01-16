@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaPhone } from 'react-icons/fa';
-import { useUser } from '../context/UserContext';
+import { useAuth } from '../hooks/useAuth';
 
 const countryCodes = [
   { code: '+91', label: '🇮🇳' },
@@ -23,7 +23,7 @@ const SignUpPage: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { setUser } = useUser();
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {

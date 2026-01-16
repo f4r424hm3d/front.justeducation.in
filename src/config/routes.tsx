@@ -1,0 +1,133 @@
+import { lazy } from 'react';
+
+/**
+ * Centralized route configuration
+ * Reduces App.tsx from 137 lines to ~40 lines
+ */
+
+// Lazy load all pages
+const pages = {
+  HomePage: lazy(() => import('../pages/HomePage')),
+  SignInPage: lazy(() => import('../pages/SignInPage')),
+  SignUpPage: lazy(() => import('../pages/SignUpPage')),
+  ProfilePage: lazy(() => import('../pages/ProfilePage')),
+  LeadsPage: lazy(() => import('../pages/LeadsPage')),
+  UniversityPage: lazy(() => import('../pages/UniversityPage')),
+  FreeListingPage: lazy(() => import('../pages/FreeListingPage')),
+  SchoolPage: lazy(() => import('../pages/SchoolPage')),
+  ReligiousSchoolPage: lazy(() => import('../pages/ReligiousSchoolPage')),
+  SchoolDetailsPage: lazy(() => import('../pages/SchoolDetailsPage')),
+  SchoolDisabilitiesPage: lazy(() => import('../pages/SchoolDisabilitiesPage')),
+  InvestorRelationsPage: lazy(() => import('../pages/InvestorRelationsPage')),
+  CollegePage: lazy(() => import('../pages/CollegePage')),
+  CityDetailsPage: lazy(() => import('../pages/CityDetailsPage')),
+  CoachingPage: lazy(() => import('../pages/CoachingPage')),
+  ITIPage: lazy(() => import('../pages/ITIPage')),
+  VocationalPage: lazy(() => import('../pages/VocationalPage')),
+  StreamDetailsPage: lazy(() => import('../pages/StreamDetailsPage')),
+  PlaySchoolPage: lazy(() => import('../pages/PlaySchoolPage')),
+  StudyAbroadPage: lazy(() => import('../pages/StudyAbroadPage')),
+  EducationLoanPage: lazy(() => import('../pages/EducationLoanPage')),
+  EduTechOnlinePage: lazy(() => import('../pages/EduTechOnlinePage')),
+  TrainingCertificationPage: lazy(() => import('../pages/TrainingCertificationPage')),
+  SkillDevelopmentPage: lazy(() => import('../pages/SkillDevelopmentPage')),
+  MBBSAbroadConsultantPage: lazy(() => import('../pages/MBBSAbroadConsultantPage')),
+  EducationConsultantPage: lazy(() => import('../pages/EducationConsultantPage')),
+  ClassesPage: lazy(() => import('../pages/ClassesPage')),
+  ClassResourceDetailsPage: lazy(() => import('../pages/ClassResourceDetailsPage')),
+  ExamPage: lazy(() => import('../pages/ExamPage')),
+  ExamDetailsPage: lazy(() => import('../pages/ExamDetailsPage')),
+  TuitionsPage: lazy(() => import('../pages/TuitionsPage')),
+  BookstoresLibrariesPage: lazy(() => import('../pages/BookstoresLibrariesPage')),
+  NGOPage: lazy(() => import('../pages/NGOPage')),
+  CourseDetailsPage: lazy(() => import('../pages/CourseDetailsPage')),
+  AddSchoolPage: lazy(() => import('../pages/AddSchoolPage')),
+  AddCollegePage: lazy(() => import('../pages/AddCollegePage')),
+  AddUniversityPage: lazy(() => import('../pages/AddUniversityPage')),
+  AddVocationalPage: lazy(() => import('../pages/AddVocationalpage')),
+  AddItiPage: lazy(() => import('../pages/AddItiPage')),
+  ListingPage: lazy(() => import('../pages/ListingPage')),
+  AddStudyAbroadPage: lazy(() => import('../pages/AddStudyAbroad')),
+  AddLibrariesPage: lazy(() => import('../pages/AddLibrariesPage')),
+  AddNgoPage: lazy(() => import('../pages/AddNgoPage')),
+  FillCoachingPage: lazy(() => import('../pages/fillCoachingPage')),
+  AddMbbsAbroadConsultantPage: lazy(() => import('../pages/AddMbbsAbroadConsultantPage')),
+};
+
+export interface RouteConfig {
+  path: string;
+  component: keyof typeof pages;
+  protected?: boolean;
+}
+
+/**
+ * Route configuration array
+ * Much easier to maintain than individual Route components
+ */
+export const routes: RouteConfig[] = [
+  { path: '/', component: 'HomePage' },
+  { path: '/signin', component: 'SignInPage' },
+  { path: '/signup', component: 'SignUpPage' },
+  { path: '/profile', component: 'ProfilePage', protected: true },
+  { path: '/leads', component: 'LeadsPage' },
+  { path: '/universities', component: 'UniversityPage' },
+  { path: '/university/:id', component: 'SchoolDetailsPage' },
+  { path: '/free-listing', component: 'FreeListingPage' },
+  { path: '/Institution/:slug', component: 'SchoolPage' },
+  { path: '/institution/school-education/:slug', component: 'SchoolDetailsPage' },
+  { path: '/religious-school', component: 'ReligiousSchoolPage' },
+  { path: '/religious-school/:id', component: 'SchoolDetailsPage' },
+  { path: '/school-disabilities', component: 'SchoolDisabilitiesPage' },
+  { path: '/school-disabilities/:id', component: 'SchoolDetailsPage' },
+  { path: '/investor-relations', component: 'InvestorRelationsPage' },
+  { path: '/colleges', component: 'CollegePage' },
+  { path: '/college/:id', component: 'SchoolDetailsPage' },
+  { path: '/city/:cityName', component: 'CityDetailsPage' },
+  { path: '/coaching', component: 'CoachingPage' },
+  { path: '/coaching/:id', component: 'SchoolDetailsPage' },
+  { path: '/iti', component: 'ITIPage' },
+  { path: '/iti/:id', component: 'SchoolDetailsPage' },
+  { path: '/vocational', component: 'VocationalPage' },
+  { path: '/vocational/:id', component: 'SchoolDetailsPage' },
+  { path: '/play-school', component: 'PlaySchoolPage' },
+  { path: '/play-school/:id', component: 'SchoolDetailsPage' },
+  { path: '/stream/:streamId', component: 'StreamDetailsPage' },
+  { path: '/study-abroad', component: 'StudyAbroadPage' },
+  { path: '/study-abroad/:id', component: 'SchoolDetailsPage' },
+  { path: '/education-loan', component: 'EducationLoanPage' },
+  { path: '/education-loan/:id', component: 'SchoolDetailsPage' },
+  { path: '/edu-tech-online', component: 'EduTechOnlinePage' },
+  { path: '/edutech-online/:id', component: 'SchoolDetailsPage' },
+  { path: '/training-certification', component: 'TrainingCertificationPage' },
+  { path: '/training-certification/:id', component: 'SchoolDetailsPage' },
+  { path: '/skill-development', component: 'SkillDevelopmentPage' },
+  { path: '/skill-development/:id', component: 'SchoolDetailsPage' },
+  { path: '/mbbs-abroad-consultant', component: 'MBBSAbroadConsultantPage' },
+  { path: '/mbbs-abroad-consultant/:id', component: 'SchoolDetailsPage' },
+  { path: '/education-consultant', component: 'EducationConsultantPage' },
+  { path: '/education-consultant/:id', component: 'SchoolDetailsPage' },
+  { path: '/classes', component: 'ClassesPage' },
+  { path: '/classes/:className/:resourceName', component: 'ClassResourceDetailsPage' },
+  { path: '/exam', component: 'ExamPage' },
+  { path: '/exam/:examName', component: 'ExamDetailsPage' },
+  { path: '/tuitions', component: 'TuitionsPage' },
+  { path: '/tuition/:id', component: 'SchoolDetailsPage' },
+  { path: '/bookstores-libraries', component: 'BookstoresLibrariesPage' },
+  { path: '/bookstores-libraries/:id', component: 'SchoolDetailsPage' },
+  { path: '/ngos', component: 'NGOPage' },
+  { path: '/ngos/:id', component: 'SchoolDetailsPage' },
+  { path: '/course/:universityId/:courseId', component: 'CourseDetailsPage' },
+  { path: '/add-school', component: 'AddSchoolPage' },
+  { path: '/add-college', component: 'AddCollegePage' },
+  { path: '/add-university', component: 'AddUniversityPage' },
+  { path: '/add-vocational', component: 'AddVocationalPage' },
+  { path: '/add-iti', component: 'AddItiPage' },
+  { path: '/add-study-abroad', component: 'AddStudyAbroadPage' },
+  { path: '/add-mbbs-abroad-consultant', component: 'AddMbbsAbroadConsultantPage' },
+  { path: '/add-ngo', component: 'AddNgoPage' },
+  { path: '/add-library', component: 'AddLibrariesPage' },
+  { path: '/fill-coaching', component: 'FillCoachingPage' },
+  { path: '/listing', component: 'ListingPage' },
+];
+
+export { pages };
